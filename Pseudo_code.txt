@@ -1,0 +1,67 @@
+declare Board_2D -> creates a global list with 4 lists inside which contains 4 separate 0
+
+procedure board_reset( ) 
+    run through each row of the matrix and 
+    change each values in that row to zero
+
+function find_next_location(starting_position) 
+    run through each row checking each value starting from starting_position row
+    if value equals to zero 
+        then this will be the next_location for a queen
+    if there is no positon equal to zero 
+        then return -1
+
+function place_queen(queen_number, starting_position=None)  
+    put the queen on the starting position square (that will be equal to the find next location first 0)
+
+procedure set_conflict_locations(queen_number, queen_row, queen_col) 
+    for each value in the queen row put value of queen_number after "Q" except the square with queen itself
+    for each value in index of queen col in each row put value of queen_number after "Q" except the square with queen itself
+    for each diagonal if move up to the left, up to the right, down to the right or down to the left is still in board:
+            diagonal is moved by the same distance up down left right  from the location choosen 
+                put value of queen_number after "Q" except the square with queen itself
+
+procedure dead_end( ) 
+    board_reset
+    value of dead end equals to True
+
+procedure display_board(): 
+    for each row print down each values with 2 spaced if number and one space if Q1, Q2, Q3 or Q4
+
+function main() 
+    set solutions = 0
+    repeat 4 times starting from 0 (i):
+        set starting_position = [0, i]
+        place_queen(Q1, starting_position)
+        set_conflict_locations(Q1, row_of_Q1, col_of_Q1)
+
+        set current_queen = 2
+        set dead_end_happened = False
+
+        repeat 3 times:
+            next_location = find_next_location(starting_position)
+
+            if next_location = -1:
+                set dead_end_happened to dead_end()
+                break
+            else:
+                place_queen(Q(current_queen), starting_position = next_location)
+                set_conflict_locations(Q(current_queen), row_of_queen, col_of_queen)
+                go to next queen 
+
+        if dead_end_happened = False and current_queen = 5:
+            solutions = solutions + 1
+            display_board()
+    Print out "there are N number of solutions"
+
+
+Q2.4
+More of a no then a yes
+Theoretically you can implement it, but the bigger it grows, less efficient and it becomes
+
+2 pros:
+    1. Easier to implement 
+    2. Easier to understand
+2 cons:
+    1. Inneficient search
+    2. Memmory problem
